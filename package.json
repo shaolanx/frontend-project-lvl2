@@ -21,6 +21,10 @@
   },
   "homepage": "https://github.com/shaolanx/frontend-project-lvl2#readme",
   "dependencies": {
-    "commander": "^9.2.0"
+    "commander": "^9.2.0",
+    "fs": "^0.0.1-security",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
+    "process": "^0.11.10"
   }
 }
