@@ -1,69 +1,37 @@
 {
-  
   "type": "module",
-  
   "name": "@hexlet/code",
-  
   "version": "1.0.0",
-  
   "description": "[![Actions Status](https://github.com/shaolanx/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/shaolanx/frontend-project-lvl2/actions)",
   
   "main": "/src/genDiff.js",
   
   "bin": {
-  
-    
-  "gendiff": "bin/gendiff.js"
-  
+    "gendiff": "bin/gendiff.js"
   },
   
   "scripts": {
-  
-    
-  "test": "jest"
-  
+    "test": "jest"
   },
   
   "repository": {
-  
-    
-  "type": "git",
-  
-    
-  "url": "git+https://github.com/shaolanx/frontend-project-lvl2.git"
-  
+    "type": "git",
+    "url": "git+https://github.com/shaolanx/frontend-project-lvl2.git"
   },
   
   "author": "",
-  
   "license": "ISC",
-  
   "bugs": {
-  
-    
-  "url": "https://github.com/shaolanx/frontend-project-lvl2/issues"
-  
+    "url": "https://github.com/shaolanx/frontend-project-lvl2/issues"
   },
   
   "homepage": "https://github.com/shaolanx/frontend-project-lvl2#readme",
-  
   "dependencies": {
-  
-    
-  "commander": "^9.2.0",
-  
-    
-  "fs": "^0.0.1-security",
-  
-    
-  "js-yaml": "^4.1.0",
-  
-    
-  "lodash": "^4.17.21",
-  
-    
-  "process": "^0.11.10"
-  
+    "commander": "^9.2.0",
+    "fs": "^0.0.1-security",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
+    "process": "^0.11.10"
   },
   
   "devDependencies": {  
