@@ -2,6 +2,7 @@ import _ from 'lodash';
 import path from 'path';
 import process from 'process';
 import { readFileSync } from 'fs';
+import parse from './parsers.js';
 
 const normalizePath = (filepath) => {
     const cwd = process.cwd();
@@ -12,8 +13,11 @@ const genDiff = (filepath1, filepath2) => {
     if (!filepath1.endsWith('json') || !filepath2.endsWith('json')) {
       return 'Wrong format of file!';
     }
-    const file1obj = JSON.parse(readFileSync(normalizePath(filepath1), 'utf8'));
-    const file2obj = JSON.parse(readFileSync(normalizePath(filepath2), 'utf8'));
+    const format1 = path.extname(filepath1);
+    const format2 = path.extname(filepath2);
+
+    const file1obj = parse(readFileSync(normalizePath(filepath1)), format1);
+    const file2obj = parse(readFileSync(normalizePath(filepath2)), format2);
   
     const entries1 = Object.entries(file1obj);
     const entries2 = Object.entries(file2obj);
