@@ -1,23 +1,14 @@
----
-
-plugins:
-  - jest
-env:
-  es2021: true
-  node: true
-
-extends:
-  - 'airbnb-base'
-  - 'plugin:jest/recommended'
-
-parserOptions:
-  ecmaVersion: latest
-  sourceType: module
-
-rules:
-  no-console: 0
-  import/extensions:
-    - error
-    - ignorePackages
-    - js: always
-  no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
+module.exports = {
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "jest": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "rules": {
+    }
+}
