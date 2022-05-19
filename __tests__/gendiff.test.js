@@ -8,11 +8,11 @@ const getFixturePath = (filename) => path.join(dirname(__filename), '..', '__fix
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 
 let resultStylish;
-let resultPlain;
+// let resultPlain;
 
 beforeAll(() => {
-    resultStylish = readFile('result.txt');
-    resultPlain = readFile('resultPlain.txt');
+  resultStylish = readFile('result.txt');
+//     resultPlain = readFile('resultPlain.txt');
 });
 
 test("genDiff's main flow json stylish", () => {
