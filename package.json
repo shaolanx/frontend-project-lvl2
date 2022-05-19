@@ -3,28 +3,22 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "[![Actions Status](https://github.com/shaolanx/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/shaolanx/frontend-project-lvl2/actions)",
-  
   "main": "/src/genDiff.js",
-  
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
-  
   "scripts": {
     "test": "jest"
   },
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shaolanx/frontend-project-lvl2.git"
   },
-  
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/shaolanx/frontend-project-lvl2/issues"
   },
-  
   "homepage": "https://github.com/shaolanx/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^9.2.0",
@@ -33,12 +27,14 @@
     "lodash": "^4.17.21",
     "process": "^0.11.10"
   },
-  
-  "devDependencies": {  
-    "eslint": "^8.15.0", 
-    "eslint-plugin-import": "^2.26.0",  
-    "eslint-plugin-jest": "^26.2.2",  
-    "jest": "^28.1.0",  
+  "devDependencies": {
+    "@jest/globals": "^28.1.0",
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.2.2",
+    "jest": "^28.1.0",
+    "jest-cli": "^28.1.0",
     "path": "^0.12.7"
   }
 }
