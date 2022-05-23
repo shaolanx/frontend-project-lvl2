@@ -23,6 +23,6 @@ test("genDiff's main flow json stylish", () => {
 });
 
 test("genDiff's main flow yaml", () => {
-  const comparedJSON = genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'));
+  const comparedJSON = genDiff(getFixturePath('filepath1.yaml'), getFixturePath('filepath2.yaml'));
   expect(comparedJSON).toEqual(resultYaml);
 });
