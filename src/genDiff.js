@@ -10,9 +10,7 @@ const normalizePath = (filepath) => {
 };
 
 const genDiff = (filepath1, filepath2) => {
-    if (!filepath1.endsWith('json') || !filepath2.endsWith('json')) {
-      return 'Wrong format of file!';
-    }
+    
     const format1 = path.extname(filepath1);
     const format2 = path.extname(filepath2);
 

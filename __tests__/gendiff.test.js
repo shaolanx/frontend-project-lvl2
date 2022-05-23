@@ -9,13 +9,20 @@ const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 
 let resultStylish;
 // let resultPlain;
+let resultYaml;
 
 beforeAll(() => {
   resultStylish = readFile('result.txt');
+  resultYaml = readFile('result.txt');
 //     resultPlain = readFile('resultPlain.txt');
 });
 
 test("genDiff's main flow json stylish", () => {
   const comparedJSON = genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'));
   expect(comparedJSON).toEqual(resultStylish);
+});
+
+test("genDiff's main flow yaml", () => {
+  const comparedJSON = genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'));
+  expect(comparedJSON).toEqual(resultYaml);
 });
