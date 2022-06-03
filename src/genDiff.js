@@ -11,16 +11,16 @@ const formAbsolutePath = (filepath) => {
   return path.resolve(cwd, filepath);
 };
 
-const genDiff = (filepath_1, filepath_2, formatterName = 'stylish') => {
-  const firstFileExt = path.extname(filepath_1);
-  const secondFileExt = path.extname(filepath_2);
-  const preparedFile_1 = parse(readFileSync(formAbsolutePath(filepath_1)), firstFileExt);
-  const preparedFile_2 = parse(readFileSync(formAbsolutePath(filepath_2)), secondFileExt);
-  if (!_.isObject(preparedFile_1) || !_.isObject(preparedFile_2)) {
+const genDiff = (filepath1, filepath2, formatterName = 'stylish') => {
+  const firstFileExt = path.extname(filepath1);
+  const secondFileExt = path.extname(filepath2);
+  const preparedFile1 = parse(readFileSync(formAbsolutePath(filepath1)), firstFileExt);
+  const preparedFile2 = parse(readFileSync(formAbsolutePath(filepath2)), secondFileExt);
+  if (!_.isObject(preparedFile1) || !_.isObject(preparedFile2)) {
     return 'Unsupported format of file!';
   }
 
-  const preparedTree = buildTree(preparedFile_1, preparedFile_2, []);
+  const preparedTree = buildTree(preparedFile1, preparedFile2, []);
 
   return format(preparedTree, formatterName);
 };
