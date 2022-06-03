@@ -9,9 +9,9 @@
 [![asciicast](https://asciinema.org/a/493759.svg)](https://asciinema.org/a/493759)
 ## Плоские ` yml ` файлы
 [![asciicast](https://asciinema.org/a/496533.svg)](https://asciinema.org/a/496533)
-### Cравнение двух ` json ` файлов с инпользованием форматера ` stylish `
+### Cравнение двух ` json ` файлов с инпользованием форматера `  stylish  `
 [![asciicast](https://asciinema.org/a/499255.svg)](https://asciinema.org/a/499255)
-### Cравнение ` json ` и ` yaml ` файлов с инпользованием форматера ` stylish `
+### Cравнение ` json ` и ` yaml ` файлов с инпользованием форматера `  stylish  `
 [![asciicast](https://asciinema.org/a/499255.svg)](https://asciinema.org/a/499255)
-### Cравнение двух ` json ` файлов с инпользованием форматера ` plain `
+### Cравнение двух ` json ` файлов с инпользованием форматера `  plain  `
 [![asciicast](https://asciinema.org/a/499258.svg)](https://asciinema.org/a/499258)
