@@ -16,12 +16,12 @@ const prepareData = (obj1, obj2, key) => {
     return { key, value: obj1[key], status: 'deleted' };
   } if (!objectComparison) {
     return [{
-    key, value: obj1[key], newValue: obj2[key], status: 'changedAndParentIsObj1',
+      key, value: obj1[key], newValue: obj2[key], status: 'changedAndParentIsObj1',
     }, {
-    key, oldValue: obj1[key], value: obj2[key], status: 'changedAndParentIsObj2',
+      key, oldValue: obj1[key], value: obj2[key], status: 'changedAndParentIsObj2',
     }];
   }
-    return { key, value: obj1[key], status: 'unchanged' };
+  return { key, value: obj1[key], status: 'unchanged' };
 };
 
 export { selectOperator, prepareData };
