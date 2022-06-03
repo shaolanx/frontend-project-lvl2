@@ -5,13 +5,13 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/bea82eb6b0c4a3d1ee1d/test_coverage)](https://codeclimate.com/github/shaolanx/frontend-project-lvl2/test_coverage)
 
 
-## Плоские json файлы
+## Плоские ` json ` файлы
 [![asciicast](https://asciinema.org/a/493759.svg)](https://asciinema.org/a/493759)
-## Плоские yml файлы
+## Плоские ` yml ` файлы
 [![asciicast](https://asciinema.org/a/496533.svg)](https://asciinema.org/a/496533)
-## Cравнение двух json файлов с инпользованием форматера ` stylish `
+### Cравнение двух ` json ` файлов с инпользованием форматера ` stylish `
 [![asciicast](https://asciinema.org/a/499255.svg)](https://asciinema.org/a/499255)
-## Cравнение json и yaml файлов с инпользованием форматера ` stylish `
+### Cравнение ` json ` и ` yaml ` файлов с инпользованием форматера ` stylish `
 [![asciicast](https://asciinema.org/a/499255.svg)](https://asciinema.org/a/499255)
-## Cравнение двух json файлов с инпользованием форматера ` plain `
+### Cравнение двух ` json ` файлов с инпользованием форматера ` plain `
 [![asciicast](https://asciinema.org/a/499258.svg)](https://asciinema.org/a/499258)
