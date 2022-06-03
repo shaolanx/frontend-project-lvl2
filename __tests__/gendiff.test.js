@@ -4,25 +4,28 @@ import { readFileSync } from 'fs';
 import genDiff from '../src/genDiff.js';
 
 const __filename = fileURLToPath(import.meta.url);
-const getFixturePath = (filename) => path.join(dirname(__filename), '..', '__fixtures__', filename);
-const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
+const buildFilePath = (filename) => path.join(dirname(__filename), '..', '__fixtures__', filename);
+const readFile = (filename) => readFileSync(buildFilePath(filename), 'utf-8');
 
-let resultStylish;
-// let resultPlain;
-let resultYaml;
+const cases = [
+  ['file1-1.json', 'file2-2.yml', 'stylish', 'STYLISH-result-file.txt'],
+  ['file1-1.json', 'file2-3.yaml', 'plain', 'PLAIN-result-file.txt'],
+  ['file1-1.json', 'file2-3.yaml', 'json', 'JSON-result-file.txt'],
+];
 
-beforeAll(() => {
-  resultStylish = readFile('result.txt');
-  resultYaml = readFile('result.txt');
-//     resultPlain = readFile('resultPlain.txt');
+test.each(cases)('Main test for "%s" and "%s" with formater "%s".', (file1, file2, formatName, fixture) => {
+  const expected = readFile(fixture);
+  const actual = genDiff(buildFilePath(file1), buildFilePath(file2), formatName);
+  expect(actual).toEqual(expected);
 });
 
-test("genDiff's main flow json stylish", () => {
-  const comparedJSON = genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'));
-  expect(comparedJSON).toEqual(resultStylish);
+test('Default formater.', () => {
+  const expected = readFile('STYLISH-result-file.txt');
+  const actual = genDiff(buildFilePath('file1-1.json'), buildFilePath('file2-3.yaml'));
+  expect(actual).toEqual(expected);
 });
 
-test("genDiff's main flow yaml", () => {
-  const comparedJSON = genDiff(getFixturePath('filepath1.yml'), getFixturePath('filepath2.yml'));
-  expect(comparedJSON).toEqual(resultYaml);
+test('Wrong file format!', () => {
+  const actual = genDiff(buildFilePath('STYLISH-result-file.txt'), buildFilePath('file1-2.json'));
+  expect(actual).toBe('Unsupported format of file!');
 });

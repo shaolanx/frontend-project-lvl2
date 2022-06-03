@@ -3,41 +3,26 @@ import path from 'path';
 import process from 'process';
 import { readFileSync } from 'fs';
 import parse from './parsers.js';
+import { buildTree } from './builds.js';
+import format from './formatters/formatters_switch.js';
 
-const normalizePath = (filepath) => {
-    const cwd = process.cwd();
-    return path.resolve(cwd, filepath);
+const formAbsolutePath = (filepath) => {
+  const cwd = process.cwd();
+  return path.resolve(cwd, filepath);
 };
 
-const genDiff = (filepath1, filepath2) => {
-    
-    const format1 = path.extname(filepath1);
-    const format2 = path.extname(filepath2);
+const genDiff = (filepath_1, filepath_2, formatterName = 'stylish') => {
+  const firstFileExt = path.extname(filepath_1);
+  const secondFileExt = path.extname(filepath_2);
+  const preparedFile_1 = parse(readFileSync(formAbsolutePath(filepath_1)), firstFileExt);
+  const preparedFile_2 = parse(readFileSync(formAbsolutePath(filepath_2)), secondFileExt);
+  if (!_.isObject(preparedFile_1) || !_.isObject(preparedFile_2)) {
+    return 'Unsupported format of file!';
+  }
 
-    const file1obj = parse(readFileSync(normalizePath(filepath1)), format1);
-    const file2obj = parse(readFileSync(normalizePath(filepath2)), format2);
-  
-    const entries1 = Object.entries(file1obj);
-    const entries2 = Object.entries(file2obj);
-    const entries = _.unionWith(entries1, entries2, _.isEqual);
-    const sortedEntries = _.sortBy(entries, ([a]) => a[0]);
-    const lines = sortedEntries.map(([key, value]) => {
-      let operator = ' ';
-      const objectComparison = file1obj[key] === file2obj[key];
-      if (!_.has(file1obj, key)
-      || (!objectComparison && value === file2obj[key])) {
-        operator = '+';
-      } if (!_.has(file2obj, key)
-      || (!objectComparison && value === file1obj[key])) {
-        operator = '-';
-      }
-      return `  ${operator} ${key}: ${value}`;
-    });
-  
-    return [
-      '{',
-      ...lines,
-      '}'].join('\n');
-  };
-  
-  export default genDiff;
+  const preparedTree = buildTree(preparedFile_1, preparedFile_2, []);
+
+  return format(preparedTree, formatterName);
+};
+
+export default genDiff;
