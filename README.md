@@ -15,3 +15,5 @@
 [![asciicast](https://asciinema.org/a/499255.svg)](https://asciinema.org/a/499255)
 ### Cравнение двух ` json ` файлов с иcпользованием форматера ` plain `.
 [![asciicast](https://asciinema.org/a/499258.svg)](https://asciinema.org/a/499258)
+### Cравнение двух ` json ` файлов с иcпользованием форматера ` json `.
+[![asciicast](https://asciinema.org/a/499264.svg)](https://asciinema.org/a/499264)
