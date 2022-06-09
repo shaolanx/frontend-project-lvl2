@@ -8,13 +8,12 @@ const buildPlainString = (obj, property) => {
 
   switch (obj.status) {
     case 'unchanged':
-    case 'changedAndParentIsObj2':
       return '';
     case 'added':
       return `Property '${property}' was added with value: ${preparedValue}`;
     case 'deleted':
       return `Property '${property}' was removed`;
-    case 'changedAndParentIsObj1':
+    case 'updated':
       return `Property '${property}' was updated. From ${preparedValue} to ${preparedNewValue}`;
     default:
       return 'Wrong object status!';
