@@ -3,7 +3,7 @@ import path from 'path';
 import process from 'process';
 import { readFileSync } from 'fs';
 import parse from './parsers.js';
-import { buildTree } from './builds.js';
+import buildTree from './builds.js';
 import format from './formatters/formatters_switch.js';
 
 const formAbsolutePath = (filepath) => {

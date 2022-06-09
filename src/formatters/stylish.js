@@ -1,5 +1,13 @@
 import _ from 'lodash';
-import { selectOperator } from '../selectives.js';
+
+const selectOperator = (obj) => {
+  if (obj.status === 'added' || obj.status === 'changedAndParentIsObj2') {
+    return '+';
+  } if (obj.status === 'deleted' || obj.status === 'changedAndParentIsObj1') {
+    return '-';
+  }
+  return ' ';
+};
 
 const stylish = (difference) => {
   const iter = (diff, depth) => {

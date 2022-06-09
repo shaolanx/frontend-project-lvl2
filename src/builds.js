@@ -1,25 +1,19 @@
 import _ from 'lodash';
-import { prepareData } from './selectives.js';
 
-const buildPlainString = (obj, property) => {
-  const isValueComplex = (_.isObject(obj.value)) ? '[complex value]' : obj.value;
-  const preparedValue = (typeof obj.value === 'string') ? `'${obj.value}'` : isValueComplex;
-  const isNewValueComplex = (_.isObject(obj.newValue)) ? '[complex value]' : obj.newValue;
-  const preparedNewValue = (typeof obj.newValue === 'string') ? `'${obj.newValue}'` : isNewValueComplex;
-
-  switch (obj.status) {
-    case 'unchanged':
-    case 'changedAndParentIsObj2':
-      return '';
-    case 'added':
-      return `Property '${property}' was added with value: ${preparedValue}`;
-    case 'deleted':
-      return `Property '${property}' was removed`;
-    case 'changedAndParentIsObj1':
-      return `Property '${property}' was updated. From ${preparedValue} to ${preparedNewValue}`;
-    default:
-      return 'Wrong object status!';
+const prepareData = (obj1, obj2, key) => {
+  const objectComparison = obj1[key] === obj2[key];
+  if (!_.has(obj1, key)) {
+    return { key, value: obj2[key], status: 'added' };
+  } if (!_.has(obj2, key)) {
+    return { key, value: obj1[key], status: 'deleted' };
+  } if (!objectComparison) {
+    return [{
+      key, value: obj1[key], newValue: obj2[key], status: 'changedAndParentIsObj1',
+    }, {
+      key, oldValue: obj1[key], value: obj2[key], status: 'changedAndParentIsObj2',
+    }];
   }
+  return { key, value: obj1[key], status: 'unchanged' };
 };
 
 const buildTree = (obj1, obj2, resultObj) => {
@@ -36,4 +30,4 @@ const buildTree = (obj1, obj2, resultObj) => {
   return preparedDataForTree;
 };
 
-export { buildPlainString, buildTree };
+export default buildTree;
