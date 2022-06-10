@@ -1,40 +1,40 @@
 import _ from 'lodash';
 
-const selectOperator = (obj) => {
-  if (obj.status === 'added' || obj.status === 'changedAndParentIsObj2') {
-    return '+';
-  } if (obj.status === 'deleted' || obj.status === 'changedAndParentIsObj1') {
-    return '-';
-  }
-  return ' ';
-};
+const iter = (tree, depth = 1) => {
+  const currentIndent = depthes => ' '.repeat(depthes * 2);
 
-const stylish = (difference) => {
-  const iter = (diff, depth) => {
-    if (!_.isObject(diff)) {
-      return `${diff}`;
+  const stringify = (value, depth) => {
+    if (!(value instanceof Object)) {
+     return value;
     }
-    const replacer = '    ';
-    const currentIndent = `${replacer.repeat(depth)}`;
-    const bracketIndent = `${replacer.repeat(depth - 1)}`;
-
-    if (!Array.isArray(diff)) {
-      const resultIfNotArray = Object
-        .keys(diff)
-        .flatMap((key) => [`${currentIndent}${key}: ${iter(diff[key], depth + 1)}`]);
-      return ['{', ...resultIfNotArray, `${bracketIndent}}`].join('\n');
-    }
-    const resultIfArray = diff.flatMap((obj) => {
-      if (obj.status !== 'has children') {
-        const operator = selectOperator(obj);
-        return [`${bracketIndent}  ${operator} ${obj.key}: ${iter(obj.value, depth + 1)}`];
-      }
-      return [`${currentIndent}${obj.key}: ${iter(obj.children, depth + 1)}`];
-    });
-    return ['{', ...resultIfArray, `${bracketIndent}}`].join('\n');
+    const openingSpaces = currentIndent(depth + 2);
+    const closingSpaces = currentIndent(depth);
+    return `{\n${openingSpaces}${Object.keys(value)}: ${Object.values(value)}\n${closingSpaces}}`;
   };
 
-  return iter(difference, 1);
+  const result = tree.map((node) => {
+    switch (node.type) {
+      case 'deleted':
+        return `${currentIndent(depth)}- ${stringify(node.value, depth)}`;
+      case 'added':
+        return `${currentIndent(depth)}+ ${stringify(node.value, depth)}`;
+      case 'unchanged':
+        return `${currentIndent(depth)}  ${stringify(node.value, depth)}`;
+      case 'updated':
+        return [
+          `${currentIndent(depth)}- ${stringify(node.value, depth)}`,
+          `${currentIndent(depth)}+ ${stringify(node.newValue, depth)}`,
+        ];
+      case 'has children':
+        return `${currentIndent(depth)}  {\n${iter(node.children, depth + 2)}\n${currentIndent(depth)}}`;
+      default:
+        throw new Error('missing selector');
+    }
+  });
+
+  return _.flatten(result).join('\n');
 };
+
+const stylish = tree => `{\n${iter(tree)}\n}`;
 
 export default stylish;
