@@ -36,7 +36,7 @@ const iter = (tree, depth = 1) => {
       case 'updated':
         return [
           `${indent.slice(1)}- ${node.key}: ${stringify(node.value, depth)}`,
-          `${indent.slice(1)}+ ${node.key}: ${stringify(node.newValue, depth )}`,
+          `${indent.slice(1)}+ ${node.key}: ${stringify(node.newValue, depth)}`,
         ];
       case 'has children':
         return `${indent} ${node.key}: {\n${iter(node.children, depth + 1)}\n${indent} }`;
