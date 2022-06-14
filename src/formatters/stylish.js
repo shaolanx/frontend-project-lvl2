@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 // const currentIndent = depthes => ' '.repeat(depthes * 2);
 
-const currentIndent = (depth, replacer = ' ', spacesCount = 2) => {
+const currentIndent = (depth, replacer = ' ', spacesCount = 4) => {
   const indentSize = depth * spacesCount;
   return replacer.repeat(indentSize);
 };
@@ -41,7 +41,7 @@ const iter = (tree, depth = 1) => {
           `${indent}+ ${node.key}: ${stringify(node.newValue, depth + 1)}`,
         ];
       case 'has children':
-        return `${indent} ${node.key}: {\n${iter(node.children, depth + 4)}\n${indent}}`;
+        return `${indent} ${node.key}: {\n${iter(node.children, depth + 2)}\n${indent}}`;
       default:
         throw new Error('missing selector');
     }
@@ -50,6 +50,6 @@ const iter = (tree, depth = 1) => {
   return _.flatten(result).join('\n');
 };
 
-const stylish = tree => `{\n  ${iter(tree)}\n}`;
+const stylish = tree => `{\n${iter(tree)}\n}`;
 
 export default stylish;
