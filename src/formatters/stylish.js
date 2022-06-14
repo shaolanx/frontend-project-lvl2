@@ -1,35 +1,47 @@
 import _ from 'lodash';
 
-const currentIndent = depthes => ' '.repeat(depthes * 2);
+// const currentIndent = depthes => ' '.repeat(depthes * 2);
+
+const currentIndent = (depth, replacer = ' ', spacesCount = 2) => {
+  const indentSize = depth * spacesCount;
+  return replacer.repeat(indentSize);
+};
 
 const stringify = (value, depth) => {
-  if (!(value instanceof Object)) {
-    return value;
+  if (!_.isObject(value)) {
+    return `${value}`;
   }
-  const openingSpaces = currentIndent(depth + 2);
-  const closingSpaces = currentIndent(depth);
-  if (value.status === 'has children') {
-    return `{\n${openingSpaces} ${stringify(Object.values(value), 4)}\n${closingSpaces}}`;
-  }
-  return `{\n${openingSpaces} ${Object.values(value)}\n${closingSpaces}  }`;
+
+  const indent = currentIndent(depth);
+  const bracketIndent = currentIndent(depth + 1);
+  const lines = Object
+    .entries(value)
+    .map(([key, val]) => `${indent}${key}: ${stringify(val, depth + 1)}`);
+
+  return [
+    '{',
+    ...lines,
+    `${bracketIndent}}`,
+  ].join('\n');
 };
 
 const iter = (tree, depth = 1) => {
   const result = tree.map((node) => {
+    const indent = currentIndent(depth);
     switch (node.status) {
       case 'deleted':
-        return `${currentIndent(depth)}- ${node.key}: ${stringify(node.value, depth)}`;
+        return `${indent}- ${node.key}: ${stringify(node.value, depth + 1)}`;
       case 'added':
-        return `${currentIndent(depth)}+ ${node.key}: ${stringify(node.value, depth)}`;
+        return `${indent}+ ${node.key}: ${stringify(node.value, depth + 1)}`;
       case 'unchanged':
-        return `${currentIndent(depth)}   ${node.key}: ${stringify(node.value, depth)}`;
+        return `${indent}  ${node.key}: ${stringify(node.value, depth + 1)}`;
       case 'updated':
         return [
-          `${currentIndent(depth)}- ${node.key}: ${stringify(node.value, depth)}`,
-          `${currentIndent(depth)}+ ${node.key}: ${stringify(node.newValue, depth)}`,
+          `${indent}- ${node.key}: ${stringify(node.value, depth + 1)}`,
+          `${indent}+ ${node.key}: ${stringify(node.newValue, depth + 1)}`,
         ];
       case 'has children':
-        return `${currentIndent(depth)} ${node.key}: {\n${iter(node.children, depth + 2)}\n${currentIndent(depth)}}`;
+        return `${indent} ${node.key}: {\n${iter(node.children, depth + 4)}\n${indent}}`;
       default:
         throw new Error('missing selector');
     }
@@ -38,6 +50,6 @@ const iter = (tree, depth = 1) => {
   return _.flatten(result).join('\n');
 };
 
-const stylish = tree => `{\n${iter(tree)}\n}`;
+const stylish = tree => `{\n  ${iter(tree)}\n}`;
 
 export default stylish;
