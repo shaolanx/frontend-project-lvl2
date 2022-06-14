@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 const currentIndent = (depth, replacer = ' ', spacesCount = 4) => {
   const indentSize = depth * spacesCount;
-  return replacer.repeat(indentSize);
+  return replacer.repeat(indentSize - 2);
 };
 
 const stringify = (value, depth) => {
@@ -16,12 +16,12 @@ const stringify = (value, depth) => {
   const bracketIndent = currentIndent(depth + 1);
   const lines = Object
     .entries(value)
-    .map(([key, val]) => `${indent}${key}: ${stringify(val, depth + 1)}`);
+    .map(([key, val]) => `${bracketIndent}  ${key}: ${stringify(val, depth + 1)}`);
 
   return [
     '{',
     ...lines,
-    `${bracketIndent}}`,
+    `${indent}}`,
   ].join('\n');
 };
 
@@ -30,18 +30,18 @@ const iter = (tree, depth = 1) => {
     const indent = currentIndent(depth);
     switch (node.status) {
       case 'deleted':
-        return `${indent}- ${node.key}: ${stringify(node.value, depth + 1)}`;
+        return `${indent}- ${node.key}: ${stringify(node.value, depth)}`;
       case 'added':
-        return `${indent}+ ${node.key}: ${stringify(node.value, depth + 1)}`;
+        return `${indent}+ ${node.key}: ${stringify(node.value, depth)}`;
       case 'unchanged':
-        return `${indent}  ${node.key}: ${stringify(node.value, depth + 1)}`;
+        return `${indent}  ${node.key}: ${stringify(node.value, depth)}`;
       case 'updated':
         return [
-          `${indent}- ${node.key}: ${stringify(node.value, depth + 1)}`,
-          `${indent}+ ${node.key}: ${stringify(node.newValue, depth + 1)}`,
+          `${indent}- ${node.key}: ${stringify(node.value, depth)}`,
+          `${indent}+ ${node.key}: ${stringify(node.newValue, depth )}`,
         ];
       case 'has children':
-        return `${indent} ${node.key}: {\n${iter(node.children, depth + 2)}\n${indent}}`;
+        return `${indent} ${node.key}: {\n${iter(node.children, depth + 1)}\n${indent}}`;
       default:
         throw new Error('missing selector');
     }
