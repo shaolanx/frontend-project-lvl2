@@ -1,7 +1,5 @@
 import _ from 'lodash';
 
-// const currentIndent = depthes => ' '.repeat(depthes * 2);
-
 const currentIndent = (depth, replacer = ' ', spacesCount = 4) => {
   const indentSize = depth * spacesCount;
   return replacer.repeat(indentSize - 1);
@@ -50,6 +48,6 @@ const iter = (tree, depth = 1) => {
   return _.flatten(result).join('\n');
 };
 
-const stylish = tree => `{\n${iter(tree)}\n}`;
+const stylish = (tree) => `{\n${iter(tree)}\n}`;
 
 export default stylish;
