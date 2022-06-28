@@ -29,7 +29,7 @@ const plain = (difference) => {
       default:
         throw new Error(`Unknown status: ${node.status}`);
     }
-  },);
+  });
   return _.flattenDeep(iter(difference)).join('\n');
 };
 
