@@ -24,8 +24,3 @@ test('Default formater.', () => {
   const actual = genDiff(buildFilePath('file1-1.json'), buildFilePath('file2-3.yaml'));
   expect(actual).toEqual(expected);
 });
-
-test('Wrong file format!', () => {
-  const actual = genDiff(buildFilePath('STYLISH-result-file.txt'), buildFilePath('file1-2.json'));
-  expect(actual).toBe('Unsupported format of file!');
-});
