@@ -17,7 +17,7 @@ const genDiff = (filepath1, filepath2, formatterName = 'stylish') => {
   const preparedFile1 = parse(readFileSync(formAbsolutePath(filepath1)), firstFileExt);
   const preparedFile2 = parse(readFileSync(formAbsolutePath(filepath2)), secondFileExt);
   if (!_.isObject(preparedFile1) || !_.isObject(preparedFile2)) {
-    return 'Unsupported format of file!';
+    throw new Error('Unsupported format of file!');
   }
 
   const preparedTree = buildTree(preparedFile1, preparedFile2, []);
