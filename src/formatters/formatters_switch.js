@@ -11,7 +11,7 @@ const format = (data, formatter) => {
     case ('json'):
       return json(data);
     default:
-      return 'Unsupported formatter selected!';
+      throw new Error('Unsupported formatter selected!');
   }
 };
 

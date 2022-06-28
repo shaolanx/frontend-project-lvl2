@@ -1,38 +1,37 @@
 import _ from 'lodash';
 
-const buildPlainString = (obj, property) => {
-  const isValueComplex = (_.isObject(obj.value)) ? '[complex value]' : obj.value;
-  const preparedValue = (typeof obj.value === 'string') ? `'${obj.value}'` : isValueComplex;
-  const isNewValueComplex = (_.isObject(obj.newValue)) ? '[complex value]' : obj.newValue;
-  const preparedNewValue = (typeof obj.newValue === 'string') ? `'${obj.newValue}'` : isNewValueComplex;
+const stringify = (value) => {
+    if (_.isObject(value)) {
+      return '[complex value]';
+    }
 
-  switch (obj.status) {
-    case 'unchanged':
-      return '';
-    case 'added':
-      return `Property '${property}' was added with value: ${preparedValue}`;
-    case 'deleted':
-      return `Property '${property}' was removed`;
-    case 'updated':
-      return `Property '${property}' was updated. From ${preparedValue} to ${preparedNewValue}`;
-    default:
-      return 'Wrong object status!';
-  }
+    if (_.isString(value)) {
+      return `'${value}'`;
+    }
+
+    return `${value}`;
 };
-
+  
 const plain = (difference) => {
-  const iter = (diff, key) => {
-    const result = diff.map((obj) => {
-      const currentKey = (key !== '') ? `${key}.${obj.key}` : obj.key;
-      if (!obj.children) {
-        return buildPlainString(obj, currentKey);
+  const iter = (diff, prefix = '') => _.map(diff,(node) => {
+      const nodeKey = `${prefix}${node.key}`;
+      switch (node.status) {
+        case 'added':
+          return `Property '${nodeKey}' was added with value: ${stringify(node.value)}`;
+        case 'deleted':
+          return `Property '${nodeKey}' was removed`;
+        case 'updated':
+          return `Property '${nodeKey}' was updated. From ${stringify(node.value)} to ${stringify(node.newValue)}`;
+        case 'unchanged':
+          return [];
+        case 'has children':
+          return iter(node.children, `${nodeKey}.`);
+        default:
+          throw new Error(`Unknown status: ${node.status}`);
       }
-      return `${iter(obj.children, currentKey)}`;
-    });
-    const filteredLines = result.filter((line) => line !== '');
-    return [...filteredLines].join('\n');
-  };
-  return iter(difference, '');
+    }
+  );
+    return _.flattenDeep(iter(difference)).join('\n');
 };
-
+  
 export default plain;
